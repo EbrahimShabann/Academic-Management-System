@@ -1,0 +1,51 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "UpSert";
+}
+
+
+
+<div class="card shadow ">
+    <div class="card-header text-white bg-dark d-flex justify-content-center">
+        <h2 class="text-white ">@(Model.Id != 0 ? "Edit " : "Add ") Department </h2>
+    </div>
+    <div class="card-body ">
+
+        <form class="m-3" method="post">
+            <input asp-for="Id" type="hidden" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div>
+                <label class="m-2">Department Name</label>
+                <input class="form form-control w-100 m-2" asp-for="Name" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+
+            </div>
+           
+
+            <div>
+                <label class="m-2">Manager Name</label>
+                <input class="form form-control w-100 m-2" asp-for="Manager"/>
+                <span asp-validation-for="@Model.Manager" class="text-danger"></span>
+
+            </div>
+           
+
+            <div class="d-flex justify-content-between mt-4">
+                @if (Model.Id != 0)
+                {
+                    <button type="submit" class="btn btn-outline-dark form-control ">Update</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-outline-dark form-control">Add</button>
+                }
+                <a class=" btn btn-outline-danger form form-control" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>

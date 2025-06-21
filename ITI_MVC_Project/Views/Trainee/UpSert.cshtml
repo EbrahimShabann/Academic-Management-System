@@ -1,0 +1,63 @@
+﻿@model Trainee
+
+
+<div class="card shadow ">
+    <div class="card-header text-white bg-dark d-flex justify-content-center">
+        <h2 class="text-white ">@(Model.Id != 0 ? "Edit " : "Add ") Trainee </h2>
+    </div>
+    <div class="card-body ">
+
+        <form class="m-3"
+              id="upsertForm"
+              asp-controller="Course"
+              asp-action="UpSert"
+              data-ajax="true"
+              data-ajax-method="post"
+              data-ajax-mode="replace"
+              data-ajax-update="#modalBody"
+              enctype="multipart/form-data">
+            <input asp-for="Id" type="hidden" />
+
+            <div>
+                <label class="m-2">Trainee Name</label>
+                <input class="form form-control w-100 m-2" asp-for="Name" type="text" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+
+            </div>
+           
+            <div>
+                <label class="m-2">Trainee Address</label>
+                <input class="form form-control w-100 m-2" asp-for="Address" type="text" />
+                <span asp-validation-for="@Model.Address" class="text-danger"></span>
+
+            </div>
+            <div>
+                <label class="m-2">Trainee Image</label>
+                <input type="file" name="file" value="@Model.Image" accept="image/*" />
+
+            </div>
+
+            <div>
+                <label asp-for="Department" class="m-2"></label>
+                <select class="form form-select" asp-for="DepartmentId" asp-items="@(new SelectList(ViewBag.deptList, "Id", "Name"))"></select>
+                <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
+
+            </div>
+           
+
+            <div class="d-flex justify-content-between mt-4">
+                @if (Model.Id != 0)
+                {
+                    <button type="submit" class="btn btn-outline-dark form-control ">Update</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-outline-dark form-control">Add</button>
+                }
+                <a class=" btn btn-outline-danger form form-control" asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

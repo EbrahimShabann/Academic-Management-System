@@ -1,0 +1,122 @@
+﻿@model PagedResult<CourseResultsViewModel>
+@{
+    ViewData["Title"] = "courseResults";
+}
+
+
+@{
+    var currentPage = (int)Model.PageNumber;
+    var totalPages = (int)Model.TotalPages;
+    var pageSize = (int)Model.PageSize;
+    var sizeOptions = new[] { 2, 5, 10, 20, 50 };
+    var cname = Model.TotalItems[0].CourseName;
+
+}
+
+<div class="row">
+
+   
+
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header pb-0 d-flex justify-content-between">
+                <h6>Course Results</h6>
+                <div class="d-flex justify-content-between">
+
+                    <form method="get" id="paginationForm" >
+                        <input type="hidden" id="cname" name="cname" value="@cname" />
+                        <input type="hidden" name="page" value="@currentPage" />
+                        <div>
+                            <label for="size">Page Size:</label>
+                            <select name="size" id="size" class="form-select d-inline-block w-auto" onchange="document.getElementById('paginationForm').submit();">
+                                @foreach (var sizeOption in sizeOptions)
+                                {
+                                    <option value="@sizeOption" selected="@(pageSize == sizeOption ? "selected" : null)">@sizeOption</option>
+
+                                }
+                            </select>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="card-body px-0 pt-0 pb-2">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-sm-center font-weight-bolder opacity-7">Course Name</th>
+                                <th class="text-uppercase text-secondary text-sm-center font-weight-bolder opacity-7 ps-2">Trainee Name</th>
+                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Trainee Degree</th>
+                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Min Degree</th>
+                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Total Degree</th>
+                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                   
+                                    <td>
+                                        <p class="text-sm-center font-weight-bold mb-0">@item.CourseName</p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <span class="text-secondary text-sm font-weight-bold ">@item.TraineeName</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-sm font-weight-bold">@item.TraineeDegree</span>
+                                    </td>
+                                  
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-sm font-weight-bold">@item.MinDegree</span>
+                                    </td>
+                                  
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-sm font-weight-bold">@item.TotalDegree</span>
+                                    </td>
+                                  
+                                    <td class="align-middle text-center">
+                                        <span class="badge badge-sm " style="background-color:@item.Color">@item.Status</span>
+                                    </td>
+                                  
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<nav class="d-flex justify-content-between">
+    <ul class="pagination">
+        <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="?page=@(currentPage - 1)&size=@pageSize&cname=@cname"><<</a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link" href="?page=@i&size=@pageSize&cname=@cname">@i</a>
+            </li>
+        }
+
+        <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+            <a class="page-link" href="?page=@(currentPage + 1)&size=@pageSize&cname=@cname">>></a>
+        </li>
+    </ul>
+
+    <div>
+        <span>Page @currentPage of @totalPages</span>
+    </div>
+</nav>
+
+
+        
+

@@ -1,0 +1,128 @@
+﻿@model Trainee
+
+@{
+    ViewData["Title"] = "Trainee Details";
+}
+
+
+
+    
+    <div class="main-content position-relative max-height-vh-100 h-100">
+       
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header pb-0">
+                            <div class="d-flex align-items-center">
+                            <h6>Trainees Courses</h6>
+                        </div>
+                        </div>
+                      @* courses *@
+                    
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-4">
+                                   
+                                <div class="card-body px-0 pt-0 pb-2">
+                                    <div class="table-responsive p-0">
+                                        <table class="table align-items-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-uppercase text-secondary text-xs-center font-weight-bolder opacity-7">Course Name</th>
+                                                    <th class="text-uppercase text-secondary text-xs-center font-weight-bolder opacity-7 ps-2">Course ID</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Trainee Degree</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Min Degree</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Total Degree</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.CrsResults)
+                                                {
+                                                    <tr>
+
+                                                        <td>
+                                                            <p class="text-sm-center font-weight-bold mb-0">@item.Course.Name</p>
+                                                        </td>
+                                                        <td class="align-middle text-center text-sm">
+                                                            <span class="text-secondary text-sm font-weight-bold ">@item.CourseId</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm font-weight-bold">@item.Degree</span>
+                                                        </td>
+
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm font-weight-bold">@item.Course.MinDegree</span>
+                                                        </td>
+
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-sm font-weight-bold">@item.Course.Degree</span>
+                                                        </td>
+
+                                                        <td class="align-middle text-center">
+                                                            @if (item.Degree >= item.Course.MinDegree)
+                                                            {
+                                                                <span class="badge badge-sm " style="background-color: green">Passed</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge badge-sm " style="background-color: red">Failed</span>
+
+                                                            }
+                                                        </td>
+
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                  
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-profile">
+                        <img src="/images/iti.jpeg" alt="Image placeholder" class="card-img-top">
+                        <div class="row justify-content-center">
+                            <div class="col-4 col-lg-4 order-lg-2">
+                                <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                                   
+                                        <img src="~/images/@Model.Image" class="rounded-circle img-fluid border border-2 border-white">
+                              
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="card-body pt-0">
+                           
+                            <div class="text-center mt-4">
+                                <h3>
+                                    Trainee Name: <span class="font-weight-light">@Model.Name</span>
+                                </h3>
+                                <h5>
+                                     ID: <span class="font-weight-light">@Model.Id</span>
+                                </h5>
+                                <div class="h6 font-weight-300">
+                                    <i class="ni location_pin mr-2"></i>@Model.Address
+                                </div>
+                                
+                                <div>
+                                    <i class="ni education_hat mr-2"></i>Department: @Model.Department?.Name
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+
