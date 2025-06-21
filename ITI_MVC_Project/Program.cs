@@ -24,6 +24,7 @@ namespace ITI_MVC_Project
 
             //Register Repositories in DI Container
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseResultsRepo, CourseResultsRepo>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
             builder.Services.AddScoped<ITraineeRepository, TraineeRepository>();

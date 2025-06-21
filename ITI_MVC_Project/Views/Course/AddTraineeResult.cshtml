@@ -1,0 +1,102 @@
+﻿@model AddTraineeResltVM
+
+
+@{
+    var depts = new SelectList(Model.Departments, "Id", "Name");
+}
+
+<div class="card shadow ">
+    <div class="card-header text-white bg-dark d-flex justify-content-between">
+        <h2 class="text-white "> Add Trainee Result </h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark bg-dark text-light"></i>
+        </button>
+
+    </div>
+    <div class="card-body ">
+        <form id="upsertForm"
+              asp-action="AddTraineeResult"
+              asp-controller="Course"
+              data-ajax="true"
+              data-ajax-method="post"
+              data-ajax-mode="replace"
+              data-ajax-update="#modalBody">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+
+            <div>
+                <label class="m-2">Trainee Department</label>
+                <select class="form form-select" id="depts" asp-for="DepartmentId" asp-items="depts" onchange="GetTraineesAndCourses()">
+                    <option value="0"> --Select Department--</option>
+                </select>
+                <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
+
+            </div>
+            <div>
+                <label class="m-2">Trainee Name </label>
+                <select class="form form-select" asp-for="TraineeId" id="trainees">
+                    <option value="0"> --Select Department First--</option>
+                </select>
+                <span asp-validation-for="@Model.TraineeId" class="text-danger"></span>
+
+
+            </div>
+            <div>
+                <label class="m-2">Course Name</label>
+                <select class="form form-select" asp-for=CourseId  id="courses">
+                    <option value="0"> --Select Department First--</option>
+                </select>
+                <span asp-validation-for="@Model.CourseId" class="text-danger"></span>
+
+
+            </div>
+            <div>
+                <label asp-for="Degree" class="m-2"></label>
+                <input class="form form-control w-100 m-2" asp-for="Degree" />
+                <span asp-validation-for="Degree" class="text-danger"></span>
+
+            </div>
+
+
+            <div class="d-flex justify-content-between mt-3">
+                <button type="submit" class=" btn btn-success  form form-control">Save</button>
+                <button type="button" class="btn btn-secondary form form-control" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<partial name="_ValidationScriptsPartial" />
+
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    //get trainees and courses based on department
+     function GetTraineesAndCourses(){
+        const deptId = $("#depts").val();
+        $("#trainees").html(`<option>-- Select Trainee -- </option>`);
+        $("#courses").html(`<option >-- Select Course -- </option>`);
+          $.ajax({
+              url: `/Course/GetTrsAndCrs/${deptId}`,
+              success: function(result){
+                   console.log(result);
+                   for(let tr of result.trainees){
+                       $("#trainees").append(`<option value=${tr.id}>${tr.name}</option>`)
+                   }
+                   for(let cr of result.courses){
+                       $("#courses").append(`<option value=${cr.id}>${cr.name}</option>`)
+                   }
+              }
+          });
+
+    }
+
+
+
+
+</script>
+

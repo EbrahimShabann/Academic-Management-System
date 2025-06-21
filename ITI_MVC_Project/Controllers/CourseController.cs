@@ -10,11 +10,18 @@ namespace ITI_MVC_Project.Controllers
     {
         private readonly ICourseRepository crRepo;
         private readonly IDepartmentRepository deptRepo;
+        private readonly ITraineeRepository trRepo;
+        private readonly ICourseResultsRepo crResRepo;
         List<Department> DepartmentList;
-        public CourseController(ICourseRepository crRepo,IDepartmentRepository deptRepo)
+        AddTraineeResltVM resltVM = new AddTraineeResltVM();
+
+        public CourseController(ICourseRepository crRepo,IDepartmentRepository deptRepo,
+            ITraineeRepository trRepo,ICourseResultsRepo crResRepo)
         {
             this.crRepo = crRepo;
             this.deptRepo = deptRepo;
+            this.trRepo = trRepo;
+            this.crResRepo = crResRepo;
         }
         public  IActionResult Index(int page = 1, int size = 5)
         {
@@ -153,6 +160,56 @@ namespace ITI_MVC_Project.Controllers
                 return Json("Hours must accept divsion by 3");
 
             }
+        }
+
+        [HttpGet]
+        public IActionResult AddTraineeResult()
+        {
+             resltVM.Departments= deptRepo.GetAll();
+            return PartialView(resltVM);
+        }
+
+       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddTraineeResult(AddTraineeResltVM vm)
+        {
+
+            vm.Departments = deptRepo.GetAll();
+
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    //New Result
+
+                    crResRepo.Add(vm);
+                    crResRepo.Save();
+  
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("Exception", ex.InnerException.Message);
+                    return PartialView(vm);
+                    //return Content("0");
+                }
+
+            }
+            else
+            {
+                return PartialView(vm);
+            }
+        }
+        public IActionResult GetTrsAndCrs(int id)
+        {
+            resltVM.Trainees = trRepo.GetAll().Where(t => t.DepartmentId == id).Select(t => new { Id = t.Id, Name = t.Name }).ToList();
+            resltVM.Courses = crRepo.GetAll().Where(c => c.DepartmentId == id).Select(c => new { Id = c.Id, Name = c.Name }).ToList();
+          
+            
+            return Json(resltVM);
         }
     }
 }
