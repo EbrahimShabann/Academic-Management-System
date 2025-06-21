@@ -8,6 +8,8 @@ namespace ITI_MVC_Project.Models
     public class Department
     {
         public int Id { get; set; }
+
+        [Required]
         [Unique]
         [StringLength(100,MinimumLength =3, ErrorMessage = "Department Name length from 3 to 100 chars")]
         public string Name { get; set; }

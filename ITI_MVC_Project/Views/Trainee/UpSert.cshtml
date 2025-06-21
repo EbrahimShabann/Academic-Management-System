@@ -2,8 +2,12 @@
 
 
 <div class="card shadow ">
-    <div class="card-header text-white bg-dark d-flex justify-content-center">
-        <h2 class="text-white ">@(Model.Id != 0 ? "Edit " : "Add ") Trainee </h2>
+    <div class="card-header text-white bg-dark d-flex justify-content-between">
+        <h2 class="text-white">@(Model.Id != 0 ? "Edit " : "Add ") Trainee </h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark bg-dark text-light"></i>
+        </button>
+
     </div>
     <div class="card-body ">
 
@@ -39,22 +43,18 @@
 
             <div>
                 <label asp-for="Department" class="m-2"></label>
-                <select class="form form-select" asp-for="DepartmentId" asp-items="@(new SelectList(ViewBag.deptList, "Id", "Name"))"></select>
+                <select class="form form-select" asp-for="DepartmentId" asp-items="@(new SelectList(ViewBag.deptList, "Id", "Name"))">
+                    <option>-- Select Department</option>
+                </select>
                 <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
 
             </div>
-           
 
-            <div class="d-flex justify-content-between mt-4">
-                @if (Model.Id != 0)
-                {
-                    <button type="submit" class="btn btn-outline-dark form-control ">Update</button>
-                }
-                else
-                {
-                    <button type="submit" class="btn btn-outline-dark form-control">Add</button>
-                }
-                <a class=" btn btn-outline-danger form form-control" asp-action="Index">Back to List</a>
+
+            <div class="d-flex justify-content-between mt-3">
+                <button type="submit" class=" btn btn-success  form form-control">Save</button>
+                <button type="button" class="btn btn-secondary form form-control" data-bs-dismiss="modal">Close</button>
+
             </div>
         </form>
     </div>

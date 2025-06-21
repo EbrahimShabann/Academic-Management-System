@@ -1,17 +1,25 @@
 ﻿@model Department
-@{
-    ViewData["Title"] = "UpSert";
-}
 
 
 
 <div class="card shadow ">
-    <div class="card-header text-white bg-dark d-flex justify-content-center">
+    <div class="card-header text-white bg-dark d-flex justify-content-between">
         <h2 class="text-white ">@(Model.Id != 0 ? "Edit " : "Add ") Department </h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark bg-dark text-light"></i>
+        </button>
+
     </div>
     <div class="card-body ">
 
-        <form class="m-3" method="post">
+        <form class="m-3"
+        id="upsertForm"
+        asp-controller="Department"
+        asp-action="UpSert"
+        data-ajax="true"
+        data-ajax-method="post"
+        data-ajax-update="#modalBody"
+        data-ajax-mode="replace">
             <input asp-for="Id" type="hidden" />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div>
@@ -30,16 +38,10 @@
             </div>
            
 
-            <div class="d-flex justify-content-between mt-4">
-                @if (Model.Id != 0)
-                {
-                    <button type="submit" class="btn btn-outline-dark form-control ">Update</button>
-                }
-                else
-                {
-                    <button type="submit" class="btn btn-outline-dark form-control">Add</button>
-                }
-                <a class=" btn btn-outline-danger form form-control" asp-action="Index">Back to List</a>
+            <div class="d-flex justify-content-between mt-3">
+                <button type="submit" class=" btn btn-success  form form-control">Save</button>
+                <button type="button" class="btn btn-secondary form form-control" data-bs-dismiss="modal">Close</button>
+
             </div>
         </form>
     </div>

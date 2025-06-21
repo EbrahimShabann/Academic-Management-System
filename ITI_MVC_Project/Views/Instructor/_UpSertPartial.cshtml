@@ -1,6 +1,9 @@
 ﻿@model InstrWithCrsAndDept
 
-
+@{
+    var Depts= new SelectList(Model.Departments, "Id", "Name");
+    var courses = new SelectList(Model.Courses, "Id", "Name");
+}
 
 
 <div class="card shadow ">
@@ -55,28 +58,16 @@
 
             <div>
                 <label class="m-2">Department</label>
-                <select class="form form-control" asp-for="DepartmentId" asp-items="@(new SelectList(Model.Departments, "Id", "Name"))">
+                <select class="form form-control" id="dept-id" asp-for="DepartmentId" asp-items="Depts" onchange="getCourses()">
                     <option value="0">--Select Department</option>
                 </select>
             </div>
             <div>
                 <label class="m-2">Course</label>
-                <select class="form form-control" asp-for="CourseId" asp-items="@(new SelectList(Model.Courses, "Id", "Name"))">
-                    <option value="0">--Select Course--</option>
+                <select class="form form-control" id="courses">
+                    <option value="0">--Select Department First--</option>
                 </select>
             </div>
-
-            @* <div class="d-flex justify-content-between mt-4">
-            @if (Model.Id != 0)
-            {
-                <button type="submit" class="btn btn-outline-dark form-control ">Update</button>
-            }
-            else
-            {
-                <button type="submit" class="btn btn-outline-dark form-control">Add</button>
-            }
-            <a class=" btn btn-outline-danger form form-control" asp-action="Index">Back to List</a>
-        </div> *@
 
             <div class="d-flex justify-content-between mt-3">
                 <button type="submit" class=" btn btn-success  form form-control">Save</button>
@@ -88,7 +79,24 @@
     </div>
 </div>
 
+<script src="/lib/jquery/dist/jquery.min.js"></script>
 
+<script>
+    function getCourses(){
+        const deptId = $("#dept-id").val();
+        $("#courses").html(`<option>-- Select Course -- </option>`);
+          $.ajax({
+              url: `/Instructor/GetDeptCrs/${deptId}`,
+              success: function(result){
+                   console.log(result);
+                   for(let cr of result){
+                       $("#courses").append(`<option>${cr.name}</option>`)
+                   }    
+              }
+          });
+       
+    }
+</script>
 
     <!-- unobtrusive validation (client‑side) -->
 <partial name="_ValidationScriptsPartial"/>

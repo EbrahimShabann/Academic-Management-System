@@ -32,7 +32,7 @@ namespace ITI_MVC_Project.Controllers
             {
                 //create new department
                 Department newDept= new Department();
-                return View(newDept);
+                return PartialView(newDept);
 
             }
             else
@@ -41,10 +41,10 @@ namespace ITI_MVC_Project.Controllers
                  deptFromDb = deptRepo.GetById(id);
                 if (deptFromDb == null)
                 {
-                    return NotFound();
+                    return Content("Not Found");
                 }
                
-                return View(deptFromDb);
+                return PartialView(deptFromDb);
 
             }
 
@@ -60,7 +60,7 @@ namespace ITI_MVC_Project.Controllers
             
             if (!ModelState.IsValid)
             {
-                return View(dept);
+                return PartialView(dept);
             }
             else
             {

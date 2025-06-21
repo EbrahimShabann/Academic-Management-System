@@ -13,15 +13,17 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header pb-0">
+                    <div class="card-header pb-0" id="flip">
                             <div class="d-flex align-items-center">
-                            <h6>Trainees Courses</h6>
+                            <h6 class="me-1">Trainees Courses</h6>
+                            <i class="fa-solid fa-circle-chevron-down"></i>
+
                         </div>
                         </div>
                       @* courses *@
-                    
 
-                        <div class="row">
+
+                    <div class="row" id="panel" style="display:none;">
                             <div class="col-12">
                                 <div class="card mb-4">
                                    
@@ -126,3 +128,15 @@
     </div>
     
 
+
+
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function(){
+      $("#flip").click(function(){
+        $("#panel").slideToggle("slow");
+      });
+    });
+</script>

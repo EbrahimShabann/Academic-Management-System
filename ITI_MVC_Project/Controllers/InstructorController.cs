@@ -171,5 +171,10 @@ namespace ITI_MVC_Project.Controllers
 
 
         }
+        public IActionResult GetDeptCrs(int id)
+        {
+            var courses = crRepo.GetAll().Where(c => c.DepartmentId == id).Select(c => new {c.Id,c.Name}).ToList();
+            return Json(courses);
+        }
     }
 }
