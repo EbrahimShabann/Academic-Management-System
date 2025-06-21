@@ -211,5 +211,43 @@ namespace ITI_MVC_Project.Controllers
             
             return Json(resltVM);
         }
+
+        public IActionResult CheckMinDeptId(int DepartmentId) 
+        { 
+        if(DepartmentId > 0)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
+    
+        public IActionResult CheckMinCrId(int CourseId)
+        { 
+        if(CourseId > 0)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
+        public IActionResult CheckMinTrId(int TraineeId)
+        { 
+        if(TraineeId > 0)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
+
+
     }
+
 }

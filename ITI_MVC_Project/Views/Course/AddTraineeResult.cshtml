@@ -78,8 +78,8 @@
     //get trainees and courses based on department
      function GetTraineesAndCourses(){
         const deptId = $("#depts").val();
-        $("#trainees").html(`<option>-- Select Trainee -- </option>`);
-        $("#courses").html(`<option >-- Select Course -- </option>`);
+        $("#trainees").html(`<option value='0'>-- Select Trainee -- </option>`);
+        $("#courses").html(`<option value='0'>-- Select Course -- </option>`);
           $.ajax({
               url: `/Course/GetTrsAndCrs/${deptId}`,
               success: function(result){
